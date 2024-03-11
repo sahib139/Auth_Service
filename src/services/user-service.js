@@ -30,6 +30,24 @@ class userService{
         }
     }
 
+    async signIn(email,password){
+        try {
+            const user=await this.userRepositroy.getByEmail(email);
+
+            const passwordMatching=this.checkPassword(password,user.password);
+            if(!passwordMatching){
+                console.log("Incorrect Password");
+                throw {error:"Incorrect Password"};
+            }
+            
+            const token = this.createToken({id:user.id,email:user.email});
+            return token;
+        } catch (error) {
+            console.log("Something went wrong at signIn service");
+            throw {error};
+        }
+    }
+
     createToken(user){
         try {
             const response = jwt.sign(user,JWT_KEY,{expiresIn:10});

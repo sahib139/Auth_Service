@@ -48,9 +48,27 @@ class userService{
         }
     }
 
+    async isAuthenticate(token){
+        try {
+            const response =this.verifyToken(token);
+            if(!response){
+                throw {error: "Invalid token"};
+            }
+            console.log(response);
+            const user=await this.userRepositroy.getById(response.id);
+            if(!user){
+                throw {error: "No user exist with this email"};
+            }
+            return user.id;
+        } catch (error) {
+            console.log("Something went wrong at isAuthentication service");
+            throw {error};
+        }
+    }   
+
     createToken(user){
         try {
-            const response = jwt.sign(user,JWT_KEY,{expiresIn:10});
+            const response = jwt.sign(user,JWT_KEY,{expiresIn:'1d'});
             return response;
         } catch (error) {
             console.log("Something went wrong at creation token service");
@@ -63,8 +81,8 @@ class userService{
             const response = jwt.verify(token,JWT_KEY);
             return response;
         } catch (error) {
-            console.log("Something went wrong at verifing token service ");
-            return error;
+            console.log("Something went wrong at verifying token service "+error);
+            return false;
         }
     }
 

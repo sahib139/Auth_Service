@@ -14,6 +14,11 @@ router.post(
     authValidateMiddleware.authUserValidator,
     userController.signIn
 );
+router.post(
+    "/isAuthenticate",
+    userController.isAuthenticate
+);
+
 router.delete("/user/:id",userController.destroy);
 
 module.exports=router;

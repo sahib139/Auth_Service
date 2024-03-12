@@ -1,4 +1,6 @@
 const {User,Role}=require("../models/index");
+const {ValidationError,AppError}=require("../utils/error/index");
+const {StatusCodes}=require("http-status-codes");
 
 class userRepository{
 
@@ -7,8 +9,16 @@ class userRepository{
             const user=await User.create(data);
             return user;
         } catch (error) {
+            if(error.name=="ValidationError"){
+                throw new ValidationError(error);
+            }
             console.log("something went wrong at repository layer");
-            throw {error};
+            throw new AppError(
+                "error",
+                "Something went wrong",
+                "Unable to create the the user",
+                StatusCodes.INTERNAL_SERVER_ERROR
+            );
         }
     }
 

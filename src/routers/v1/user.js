@@ -1,22 +1,28 @@
 const express=require("express");
 const router=express.Router();
 
-const {authValidateMiddleware}=require("../../middleware/index");
+const {authMiddleware}=require("../../middleware/index");
 const {userController}=require("../../controllers/index");
 
 router.post(
     "/signup",
-    authValidateMiddleware.authUserValidator,
+    authMiddleware.authUserValidator,
     userController.create
 );
 router.post(
     "/signin",
-    authValidateMiddleware.authUserValidator,
+    authMiddleware.authUserValidator,
     userController.signIn
 );
 router.post(
     "/isAuthenticate",
     userController.isAuthenticate
+);
+
+router.get(
+    "/isAdmin",
+    authMiddleware.isAdminValidator,
+    userController.isAdmin,
 );
 
 router.delete("/user/:id",userController.destroy);

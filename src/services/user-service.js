@@ -1,4 +1,4 @@
-const {userRepositroy}=require("../repository/index");
+const {userRepository}=require("../repository/index");
 const {JWT_KEY} = require("../config/server_config");
 
 const jwt = require("jsonwebtoken");
@@ -7,12 +7,12 @@ const bcrypt = require("bcrypt");
 class userService{
 
     constructor(){
-        this.userRepositroy=new userRepositroy();
+        this.userRepository=new userRepository();
     }
 
     async create(data){
         try {
-            const user=await this.userRepositroy.create(data);
+            const user=await this.userRepository.create(data);
             return user;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -22,7 +22,7 @@ class userService{
 
     async delete(userid){
         try {
-            const response=await this.userRepositroy.delete(userid);
+            const response=await this.userRepository.delete(userid);
             return response;
         } catch (error) {
             console.log("Something went wrong at service layer");
@@ -32,7 +32,7 @@ class userService{
 
     async signIn(email,password){
         try {
-            const user=await this.userRepositroy.getByEmail(email);
+            const user=await this.userRepository.getByEmail(email);
 
             const passwordMatching=this.checkPassword(password,user.password);
             if(!passwordMatching){
@@ -55,7 +55,7 @@ class userService{
                 throw {error: "Invalid token"};
             }
             console.log(response);
-            const user=await this.userRepositroy.getById(response.id);
+            const user=await this.userRepository.getById(response.id);
             if(!user){
                 throw {error: "No user exist with this email"};
             }
@@ -65,6 +65,16 @@ class userService{
             throw {error};
         }
     }   
+
+    async isAdmin(userId){
+        try {
+            const response = await this.userRepository.isAdmin(userId);
+            return response;
+        } catch (error) {
+            console.log("Something went wrong at service layer");
+            throw {error};
+        }   
+    }
 
     createToken(user){
         try {

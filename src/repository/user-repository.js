@@ -1,6 +1,6 @@
-const {User}=require("../models/index");
+const {User,Role}=require("../models/index");
 
-class userRepositroy{
+class userRepository{
 
     async create(data){
         try {
@@ -12,11 +12,11 @@ class userRepositroy{
         }
     }
 
-    async delete(userid){
+    async delete(userId){
         try {
             await User.destroy({
                 where:{
-                    id:userid,
+                    id:userId,
                 }
             });
             return true;
@@ -52,6 +52,22 @@ class userRepositroy{
         }
     }
 
+    async isAdmin(userId){
+        try {
+            const user = await User.findByPk(userId);
+            const role = await Role.findOne({
+                where:{
+                    name:"ADMIN",
+                }
+            })
+            const response= await user.hasRole(role);
+            return response;
+        } catch (error) {
+            console.log("something went wrong at repository layer ");
+            throw {error};
+        }
+    }
+
 }
 
-module.exports=userRepositroy;
+module.exports=userRepository;

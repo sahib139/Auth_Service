@@ -9,4 +9,5 @@ module.exports={
     PORT:process.env.PORT,
     SALT:bcrypt.genSaltSync(saltRounds),
     JWT_KEY:'AUTHSERVICE',
+    DB_SYNC:process.env.DB_SYNC,
 }

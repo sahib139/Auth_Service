@@ -1,3 +1,3 @@
 module.exports={
-    authValidateMiddleware:require("./auth-validation-middleware"),
+    authMiddleware:require("./auth-validation-middleware"),
 }

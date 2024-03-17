@@ -5,12 +5,12 @@ const {authMiddleware}=require("../../middleware/index");
 const {userController}=require("../../controllers/index");
 
 router.post(
-    "/signup",
+    "/signUp",
     authMiddleware.authUserValidator,
     userController.create
 );
 router.post(
-    "/signin",
+    "/signIn",
     authMiddleware.authUserValidator,
     userController.signIn
 );

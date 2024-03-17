@@ -50,16 +50,23 @@ class userService{
 
     async isAuthenticate(token){
         try {
-            const response =this.verifyToken(token);
+            const response = this.verifyToken(token);
             if(!response){
-                throw {error: "Invalid token"};
+                return {
+                    success:false,
+                };
             }
-            console.log(response);
             const user=await this.userRepository.getById(response.id);
             if(!user){
-                throw {error: "No user exist with this email"};
+                return {
+                    success:false,
+                };
             }
-            return user.id;
+            return {
+                success:true,
+                userId:user.id,
+                emailId:user.email,
+            };
         } catch (error) {
             console.log("Something went wrong at isAuthentication service");
             throw {error};

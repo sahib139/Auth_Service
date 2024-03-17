@@ -8,6 +8,6 @@ const saltRounds = 10;
 module.exports={
     PORT:process.env.PORT,
     SALT:bcrypt.genSaltSync(saltRounds),
-    JWT_KEY:'AUTHSERVICE',
+    JWT_KEY:process.env.JWT_KEY,
     DB_SYNC:process.env.DB_SYNC,
 }

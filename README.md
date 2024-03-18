@@ -6,7 +6,7 @@
 - Create `.env` file in the root directory and add the following environment variable
     - `PORT = 3001`
     - `JWT_KEY = AUTHSERVICE`
-    - `DB_SYNC = `false -> for syncing the database initially make it true , after executing once change it to false because we don't want to do syncing every time we start the server.
+    - `DB_SYNC = false` -> for syncing the database initially make it true , after executing once change it to false because we don't want to do syncing every time we start the server.
 - Inside the `src/config` folder create a new file `config.json` and then add the following piece of json code
 
 ```
@@ -37,5 +37,5 @@
     Hence Many to Many relationship between two tables
 
 ```
-- Final Run the `src/index.js` file to run the Server.
+- Finally, Run the `src/index.js` file to run the Server.
  

@@ -37,5 +37,5 @@
     Hence Many to Many relationship between two tables
 
 ```
-- Finally, Run the `src/index.js` file to run the Server.
+- Finally, Run the `npm start` in the root directory to run the Server.
  
